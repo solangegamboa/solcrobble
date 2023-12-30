@@ -1,5 +1,5 @@
-import os
 import pylast
+import os
 from collections import namedtuple
 
 # You have to have your own unique two values for API_KEY and API_SECRET
@@ -7,16 +7,30 @@ from collections import namedtuple
 API_KEY = "827273248db08020cb101b7971f91d59"  # this is a sample key
 API_SECRET = "ee685a5bfdc48ac57cc834cb75122995"
 
-# In order to perform a write operation you need to authenticate yourself
-username = "um1up"
-password_hash = pylast.md5("guqca7-xuzkyn-dUwhuj")
+SESSION_KEY_FILE = os.path.join(os.path.expanduser("~"), ".session_key")
+network = pylast.LastFMNetwork(API_KEY, API_SECRET)
+if not os.path.exists(SESSION_KEY_FILE):
+    skg = pylast.SessionKeyGenerator(network)
+    url = skg.get_web_auth_url()
 
-network = pylast.LastFMNetwork(
-    api_key=API_KEY,
-    api_secret=API_SECRET,
-    username=username,
-    password_hash=password_hash,
-)
+    print(f"Please authorize this script to access your account: {url}\n")
+    import time
+    import webbrowser
+
+    webbrowser.open(url)
+
+    while True:
+        try:
+            session_key = skg.get_web_auth_session_key(url)
+            with open(SESSION_KEY_FILE, "w") as f:
+                f.write(session_key)
+            break
+        except pylast.WSError:
+            time.sleep(1)
+else:
+    session_key = open(SESSION_KEY_FILE).read()
+
+network.session_key = session_key
 
 scrobbler_file = "/Volumes/IPOD DE SOL/.scrobbler.log"
 
