@@ -4,12 +4,12 @@ from collections import namedtuple
 
 # You have to have your own unique two values for API_KEY and API_SECRET
 # Obtain yours from https://www.last.fm/api/account/create for Last.fm
-API_KEY = "API_KEY"  # this is a sample key
-API_SECRET = "API_SECRET"
+API_KEY = "827273248db08020cb101b7971f91d59"  # this is a sample key
+API_SECRET = "ee685a5bfdc48ac57cc834cb75122995"
 
 # In order to perform a write operation you need to authenticate yourself
-username = "USER"
-password_hash = pylast.md5("PASSWORD")
+username = "um1up"
+password_hash = pylast.md5("guqca7-xuzkyn-dUwhuj")
 
 network = pylast.LastFMNetwork(
     api_key=API_KEY,
@@ -18,7 +18,7 @@ network = pylast.LastFMNetwork(
     password_hash=password_hash,
 )
 
-scrobbler_file = "/Volumes/IPOD/.scrobbler.log"
+scrobbler_file = "/Volumes/IPOD DE SOL/.scrobbler.log"
 # with open(scrobbler_file) as f:
 #     # contents = f.read()
 #     for line in f.readlines(): 
