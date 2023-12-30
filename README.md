@@ -7,8 +7,6 @@ Envio do log Rockbox para Last.fm API
 ### 2 - Configure dentro de lastfm.py
     API_KEY
     API_SECRET
-    username
-    password
     local onde está o .scrooble.log
 
 ### 3 - Programa para rodar atalho quando o ipod é conectado: 

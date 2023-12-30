@@ -6,8 +6,8 @@ from collections import namedtuple
 # Obtain yours from https://www.last.fm/api/account/create for Last.fm
 API_KEY = "827273248db08020cb101b7971f91d59"  # this is a sample key
 API_SECRET = "ee685a5bfdc48ac57cc834cb75122995"
-
 SESSION_KEY_FILE = os.path.join(os.path.expanduser("~"), ".session_key")
+
 network = pylast.LastFMNetwork(API_KEY, API_SECRET)
 if not os.path.exists(SESSION_KEY_FILE):
     skg = pylast.SessionKeyGenerator(network)
