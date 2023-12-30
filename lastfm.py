@@ -19,12 +19,6 @@ network = pylast.LastFMNetwork(
 )
 
 scrobbler_file = "/Volumes/IPOD DE SOL/.scrobbler.log"
-# with open(scrobbler_file) as f:
-#     # contents = f.read()
-#     for line in f.readlines(): 
-#         if line.startswith("#"):
-#             continue
-#         print(line)
 
 Record = namedtuple("Record", "artist album title track_number duration rating timestamp mbid")
 records = []
@@ -37,16 +31,21 @@ with open(scrobbler_file) as f:
         line = line[0:8]
         line = Record(*line)
         records.append(line)
-    
+ 
+multiscroble = []   
 for records in records:
-    scrobbler = network.scrobble(
-        artist=records.artist, 
-        title=records.title, 
-        timestamp=records.timestamp, 
-        album=records.album, 
-        track_number=records.track_number, 
-        duration=records.duration, 
-        album_artist=records.artist,
-        mbid=records.mbid)
+    scrobbler = {
+                    "artist": records.artist,
+                    "title": records.title,
+                    "timestamp": records.timestamp,
+                    "album": records.album,
+                    "album_artist": records.artist,
+                    "track_number": records.track_number,
+                    "duration": records.duration,
+                    "mbid": records.mbid,
+                }
+    multiscroble.append(scrobbler)
+
+network.scrobble_many(multiscroble)
 
 os.remove(scrobbler_file)
